@@ -1,11 +1,15 @@
 import 'package:bmi/components/sec_btn.dart';
+import 'package:bmi/controller/bmi_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/instance_manager.dart';
 
 class AgeSelector extends StatelessWidget {
   const AgeSelector({super.key});
 
   @override
   Widget build(BuildContext context) {
+    BmiController bmiController = Get.put(BmiController());
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -20,7 +24,7 @@ class AgeSelector extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Age',
+                  "Age",
                   style: TextStyle(
                       fontSize: 18,
                       color:
@@ -34,21 +38,31 @@ class AgeSelector extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '23',
-                  style: TextStyle(
-                      fontSize: 70,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer),
+                Obx(
+                  () => Text(
+                    '${bmiController.age.value}',
+                    style: TextStyle(
+                        fontSize: 70,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).colorScheme.onPrimaryContainer),
+                  ),
                 ),
-              
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SecBtn(onpress: () {}, iconData: Icons.add),
-                SecBtn(onpress: () {}, iconData: Icons.minimize)
+                SecBtn(
+                    onpress: () {
+                      bmiController.age.value++;
+                    },
+                    iconData: Icons.add),
+                SecBtn(
+                    onpress: () {
+                      bmiController.age.value--;
+                    },
+                    iconData: Icons.minimize)
               ],
             ),
           ],
