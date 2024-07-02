@@ -1,11 +1,14 @@
 import 'package:bmi/components/age_selector.dart';
 import 'package:bmi/components/height_selector.dart';
 import 'package:bmi/components/primary_btn.dart';
+import 'package:bmi/components/react_btn.dart';
 import 'package:bmi/components/theme_changer_btn.dart';
 import 'package:bmi/components/weight_selector.dart';
 import 'package:bmi/controller/bmi_controller.dart';
 import 'package:bmi/controller/theme_controller.dart';
+import 'package:bmi/pages/result.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 
 class HomePage extends StatelessWidget {
@@ -61,7 +64,7 @@ class HomePage extends StatelessWidget {
                 ),
                 PrimaryBtn(
                   onpress: () {
-                     bmiController.genderHandle('FEMALE');
+                    bmiController.genderHandle('FEMALE');
                   },
                   iconData: Icons.female,
                   btnName: 'FEMALE',
@@ -71,12 +74,12 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Expanded(
+            const Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   HeightSelector(),
-                  const SizedBox(width: 20),
+                  SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,13 +95,16 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             SizedBox(
               height: 50,
-              child: PrimaryBtn(
-                onpress: () {},
+              child: ReactBtn(
+                onpress: () {
+                  bmiController.calculateBMI();
+                  Get.to(const ResultPage());
+                },
                 iconData: Icons.done,
                 btnName: 'LETS GO',
               ),

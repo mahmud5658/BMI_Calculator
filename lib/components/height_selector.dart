@@ -1,4 +1,7 @@
+import 'package:bmi/controller/bmi_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/instance_manager.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class HeightSelector extends StatefulWidget {
@@ -11,9 +14,10 @@ class HeightSelector extends StatefulWidget {
 class _HeightSelectorState extends State<HeightSelector> {
   @override
   Widget build(BuildContext context) {
+    BmiController bmiController = Get.put(BmiController());
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Theme.of(context).colorScheme.primaryContainer,
@@ -33,18 +37,21 @@ class _HeightSelectorState extends State<HeightSelector> {
               ],
             ),
             Expanded(
-              child: SfSlider.vertical(
-                min: 100.0,
-                max: 500.0,
-                value: 200,
-                interval: 50,
+                child: Obx(
+              () => SfSlider.vertical(
+                min: 50.0,
+                max: 250.0,
+                value: bmiController.height.value,
+                interval: 25,
                 showTicks: true,
                 showLabels: true,
                 enableTooltip: true,
                 minorTicksPerInterval: 1,
-                onChanged: (dynamic value) {},
+                onChanged: (dynamic value) {
+                  bmiController.height.value = value;
+                },
               ),
-            ),
+            )),
           ],
         ),
       ),
