@@ -3,6 +3,7 @@ import 'package:bmi/components/height_selector.dart';
 import 'package:bmi/components/primary_btn.dart';
 import 'package:bmi/components/theme_changer_btn.dart';
 import 'package:bmi/components/weight_selector.dart';
+import 'package:bmi/controller/bmi_controller.dart';
 import 'package:bmi/controller/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.put(ThemeController());
+    BmiController bmiController = Get.put(BmiController());
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -47,11 +49,23 @@ class HomePage extends StatelessWidget {
             ),
             Row(
               children: [
-                PrimaryBtn(onpress: (){},iconData: Icons.male, btnName: 'MALE',),
+                PrimaryBtn(
+                  onpress: () {
+                    bmiController.genderHandle('MALE');
+                  },
+                  iconData: Icons.male,
+                  btnName: 'MALE',
+                ),
                 const SizedBox(
                   width: 20,
                 ),
-                PrimaryBtn(onpress: (){},iconData: Icons.female, btnName: 'FEMALE',),
+                PrimaryBtn(
+                  onpress: () {
+                     bmiController.genderHandle('FEMALE');
+                  },
+                  iconData: Icons.female,
+                  btnName: 'FEMALE',
+                ),
               ],
             ),
             const SizedBox(
@@ -68,7 +82,9 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         WeightSelector(),
-                        SizedBox(height: 30,),
+                        SizedBox(
+                          height: 30,
+                        ),
                         AgeSelector(),
                       ],
                     ),
@@ -82,7 +98,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 50,
               child: PrimaryBtn(
-                onpress: (){},
+                onpress: () {},
                 iconData: Icons.done,
                 btnName: 'LETS GO',
               ),
